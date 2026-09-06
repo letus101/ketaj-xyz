@@ -35,20 +35,22 @@ export function PostList({ initialPosts, categories }: PostListProps) {
 
   return (
     <>
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 border-b border-border pb-4">
-        <TagFilter
-          categories={categories}
-          activeSlug={activeSlug}
-          onCategoryChange={setActiveSlug}
-        />
-        
-        <div className="relative md:max-w-xs w-full">
+      <div className="flex flex-col gap-6 mb-8 border-b border-border pb-6">
+        <div className="relative w-full max-w-md">
           <input
             type="text"
             placeholder="Search posts..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-background border border-border px-3 py-1.5 text-sm font-mono text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors mb-2 md:mb-8"
+            className="w-full bg-background border border-border px-4 py-2 text-sm font-mono text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
+          />
+        </div>
+        
+        <div className="w-full overflow-hidden">
+          <TagFilter
+            categories={categories}
+            activeSlug={activeSlug}
+            onCategoryChange={setActiveSlug}
           />
         </div>
       </div>
