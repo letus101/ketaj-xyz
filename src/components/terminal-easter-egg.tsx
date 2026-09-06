@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef, ReactNode } from 'react';
 
 const SECRET_CODE = ['h', 'a', 'c', 'k'];
-const FLAG = 'HTB{th3_m4tr1x_1s_r34l}';
+const FLAG = 'KET{th3_m4tr1x_1s_r34l}';
 
 export function TerminalEasterEgg() {
   const [inputBuffer, setInputBuffer] = useState<string[]>([]);
@@ -163,6 +163,25 @@ function InteractiveCLI({ onClose }: { onClose: () => void }) {
                   if (e.key === 'Enter') {
                     handleCommand(input);
                     setInput('');
+                  } else if (e.key === 'Tab') {
+                    e.preventDefault(); // Prevent losing focus
+                    
+                    const args = input.split(' ');
+                    const currentWord = args[args.length - 1];
+                    let candidates: string[] = [];
+                    
+                    if (args.length === 1) {
+                      candidates = ['help', 'whoami', 'clear', 'exit', 'ls', 'cat', 'decrypt'];
+                    } else if (args.length === 2 && ['cat', 'decrypt'].includes(args[0].toLowerCase())) {
+                      candidates = ['README.md', 'payload.enc'];
+                    }
+                    
+                    const matches = candidates.filter(c => c.startsWith(currentWord));
+                    
+                    if (matches.length === 1) {
+                      args[args.length - 1] = matches[0];
+                      setInput(args.join(' ') + ' ');
+                    }
                   }
                 }}
                 autoComplete="off"
