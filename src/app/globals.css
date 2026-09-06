@@ -92,13 +92,17 @@
 /* ── Shiki dual-theme support ── */
 /* Shiki outputs CSS variables when themes: { light, dark } and defaultColor: false */
 .shiki,
-.shiki span {
+.shiki span,
+[data-rehype-pretty-code-figure] pre,
+[data-rehype-pretty-code-figure] span {
   color: var(--shiki-light);
   background-color: var(--shiki-light-bg);
 }
 
 .dark .shiki,
-.dark .shiki span {
+.dark .shiki span,
+.dark [data-rehype-pretty-code-figure] pre,
+.dark [data-rehype-pretty-code-figure] span {
   color: var(--shiki-dark) !important;
   background-color: var(--shiki-dark-bg) !important;
   font-style: var(--shiki-dark-font-style) !important;
@@ -107,24 +111,28 @@
 }
 
 /* ── Prose / Portable Text ── */
-.prose-ketaj a {
+.prose a {
   @apply text-primary underline underline-offset-4 hover:text-primary/80;
 }
 
-.prose-ketaj blockquote {
+.prose blockquote {
   @apply border-l-2 border-primary pl-4 italic text-muted-foreground;
 }
 
-.prose-ketaj ul {
+.prose ul {
   @apply list-disc pl-6 space-y-1;
 }
 
-.prose-ketaj ol {
+.prose ol {
   @apply list-decimal pl-6 space-y-1;
 }
 
-.prose-ketaj code:not(pre code) {
-  @apply bg-muted px-1.5 py-0.5 font-mono text-sm;
+.prose code:not(pre code) {
+  @apply bg-muted/80 text-primary px-1.5 py-0.5 rounded-sm font-mono text-sm;
+}
+.prose code::before,
+.prose code::after {
+  content: none !important;
 }
 
 /* ── Scrollbar styling ── */

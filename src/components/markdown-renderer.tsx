@@ -25,20 +25,6 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
       const id = String(props.children).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
       return <h3 id={id} {...props} />;
     },
-    code: (props: any) => {
-      // Inline code is not wrapped in pre by rehype-pretty-code (usually).
-      // We check if it has the data-language attribute to distinguish block from inline.
-      const isInline = !props['data-language'];
-      if (isInline) {
-        return (
-          <code
-            className="bg-muted/60 px-1.5 py-0.5 rounded-sm text-sm font-mono text-primary before:content-[''] after:content-['']"
-            {...props}
-          />
-        );
-      }
-      return <code {...props} />;
-    },
   };
 
   return (
