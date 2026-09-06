@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { defineField, defineType } from 'sanity';
 
 export default defineType({
@@ -108,7 +109,20 @@ export default defineType({
     defineField({
       name: 'markdownBody',
       title: 'Markdown Body (Optional)',
-      description: 'If you prefer writing in Markdown, use this field instead of the rich text Body above.',
+      description: (
+        <div style={{ marginTop: '0.5rem' }}>
+          <p>If you prefer writing in Markdown, use this field instead of the rich text Body above.</p>
+          <div style={{ marginTop: '1rem', padding: '0.75rem', backgroundColor: '#f4f6f8', color: '#1f2937', borderRadius: '4px', border: '1px solid #e5e7eb' }}>
+            <strong>💡 MDX Helper: Password Spoiler</strong>
+            <p style={{ fontSize: '0.875rem', marginTop: '0.25rem' }}>Copy and paste this snippet into your markdown to create a password-protected block:</p>
+            <pre style={{ marginTop: '0.5rem', padding: '0.5rem', backgroundColor: '#e5e7eb', borderRadius: '4px', fontSize: '0.8rem', overflowX: 'auto' }}>
+{`<Spoiler title="Local.txt Flag" password="HTB{flag_here}">
+  Your hidden markdown content goes here!
+</Spoiler>`}
+            </pre>
+          </div>
+        </div>
+      ) as any,
       type: 'markdown',
     }),
   ],
