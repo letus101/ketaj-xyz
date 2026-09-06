@@ -17,7 +17,7 @@ interface TagFilterProps {
 
 export function TagFilter({ categories, activeSlug, onCategoryChange }: TagFilterProps) {
   return (
-    <div className="flex overflow-x-auto gap-2 mb-8 pb-2">
+    <div className="flex overflow-x-auto gap-2 pb-2">
       {/* "All" button */}
       <button
         onClick={() => onCategoryChange('')}

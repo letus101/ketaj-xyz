@@ -9,6 +9,8 @@ export const postsQuery = groq`
     slug,
     excerpt,
     publishedAt,
+    body,
+    markdownBody,
     categories[]->{ _id, title, slug },
     mainImage {
       asset->{ _id, url, metadata { dimensions } },
@@ -26,6 +28,8 @@ export const postsByCategoryQuery = groq`
     slug,
     excerpt,
     publishedAt,
+    body,
+    markdownBody,
     categories[]->{ _id, title, slug },
     mainImage {
       asset->{ _id, url, metadata { dimensions } },

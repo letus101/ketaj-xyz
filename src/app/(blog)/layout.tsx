@@ -33,6 +33,11 @@ export const metadata: Metadata = {
     locale: 'en_US',
     type: 'website',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'ketaj.xyz',
+    description: 'Cybersecurity research — red team operations, DFIR, custom tooling, and CTF writeups.',
+  },
 };
 
 export default function BlogLayout({ children }: { children: React.ReactNode }) {

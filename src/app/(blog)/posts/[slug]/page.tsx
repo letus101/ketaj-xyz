@@ -8,6 +8,7 @@ import { PortableTextRenderer, extractHeadings } from '@/components/portable-tex
 import { TableOfContents } from '@/components/table-of-contents';
 import { Badge } from '@/components/ui/badge';
 import { MarkdownRenderer } from '@/components/markdown-renderer';
+import { estimateReadingTime } from '@/lib/reading-time';
 
 export const revalidate = false;
 
@@ -34,7 +35,9 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
 
   const ogImage = post.mainImage?.asset
     ? urlForImage(post.mainImage).width(1200).height(630).url()
-    : undefined;
+    : `/api/og?title=${encodeURIComponent(post.title)}&category=${encodeURIComponent(
+        post.categories?.[0]?.title || 'Blog'
+      )}`;
 
   return {
     title: post.title,
@@ -44,7 +47,14 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
       description: post.excerpt || '',
       type: 'article',
       publishedTime: post.publishedAt,
-      ...(ogImage ? { images: [{ url: ogImage }] } : {}),
+      url: `https://ketaj.xyz/posts/${post.slug.current}`,
+      images: ogImage ? [{ url: ogImage }] : [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt || '',
+      images: ogImage ? [ogImage] : [],
     },
   };
 }
@@ -113,6 +123,8 @@ export default async function PostPage({ params }: PostPageProps) {
               <span>{post.author.name}</span>
             </>
           )}
+          <span className="text-border">|</span>
+          <span>{estimateReadingTime(post)} min read</span>
         </div>
       </header>
 

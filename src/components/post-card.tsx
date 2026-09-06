@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { urlForImage } from '@/sanity/lib/image';
+import { estimateReadingTime } from '@/lib/reading-time';
 
 interface Category {
   _id: string;
@@ -18,6 +19,8 @@ interface PostCardProps {
     categories?: Category[];
     mainImage?: any;
     author?: { name: string };
+    body?: any;
+    markdownBody?: string;
   };
 }
 
@@ -79,6 +82,8 @@ export function PostCard({ post }: PostCardProps) {
                 <span>{post.author.name}</span>
               </>
             )}
+            <span className="text-border">|</span>
+            <span>{estimateReadingTime(post)} min read</span>
           </div>
         </div>
       </article>
