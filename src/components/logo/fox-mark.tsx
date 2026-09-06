@@ -1,0 +1,44 @@
+import { cn } from '@/lib/utils';
+
+interface FoxMarkProps {
+  className?: string;
+  size?: number;
+}
+
+/**
+ * Standalone fox icon mark — single source of truth.
+ * Body uses currentColor (inherits text color from parent).
+ * Eyes/nose are always crimson (#B0212B) regardless of theme.
+ *
+ * Used in: favicon, mobile nav, scroll-condensed header, and
+ * rendered inside <LogoLockup> for the full lockup.
+ */
+export function FoxMark({ className, size = 32 }: FoxMarkProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 32 32"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="ketaj.xyz"
+      className={cn('shrink-0', className)}
+    >
+      {/* Fox body — uses currentColor so it re-themes automatically */}
+      <path
+        fill="currentColor"
+        d="M26.924 13.444l-3.826 1.507 0.896-2.595-1.388 0.725c-0.73-4.117-1.268-8.233-0.974-12.35-1.522 2.065-2.844 4.604-3.782 7.167h-4.912c-1.155-2.691-2.657-5.043-4.155-7.401 0.262 4.424 0.106 8.559-0.227 12.629l-1.475-0.77 0.896 2.595-3.826-1.507 3.308 3.375-2.574 0.174c1.906 1.221 4.277 2.022 5.66 3.717 1.734 2.475 2.7 4.968 2.792 9.708 1.42 0.664 3.187 0.628 4.467 0 0.303-4.853 0.935-7.039 2.661-9.626 1.373-1.752 3.789-2.559 5.726-3.799l-2.574-0.174 3.308-3.375z"
+      />
+      {/* Left eye — always crimson */}
+      <path
+        fill="#B0212B"
+        d="M13.464 21.633c0.173-2.525-0.945-3.986-3.239-4.524 1.025-1.191 2.165-1.051 3.296 0.123v0c1.124 1.168 0.918 2.974-0.057 4.4z"
+      />
+      {/* Right eye — always crimson */}
+      <path
+        fill="#B0212B"
+        d="M17.678 21.633c-0.918-1.426-1.051-3.232 0.12-4.4l0-0c1.123-1.12 2.217-1.298 3.163-0.28l-0.043 0.202c-2.195 0.572-3.309 2.021-3.24 4.479z"
+      />
+    </svg>
+  );
+}
