@@ -77,7 +77,12 @@ export default defineType({
           type: 'object',
           fields: [
             defineField({ name: 'platform', title: 'Platform', type: 'string' }),
-            defineField({ name: 'url', title: 'URL', type: 'url' }),
+            defineField({
+              name: 'url',
+              title: 'URL',
+              type: 'url',
+              validation: (Rule: any) => Rule.uri({ scheme: ['http', 'https', 'mailto'] }),
+            }),
           ],
           preview: {
             select: { title: 'platform', subtitle: 'url' },
