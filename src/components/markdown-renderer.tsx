@@ -1,45 +1,53 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypePrettyCode from 'rehype-pretty-code';
 
 interface MarkdownRendererProps {
   content: string;
 }
 
 export function MarkdownRenderer({ content }: MarkdownRendererProps) {
+  const prettyCodeOptions = {
+    theme: {
+      light: 'vitesse-light',
+      dark: 'vitesse-dark',
+    },
+    defaultLang: 'text',
+    keepBackground: false,
+  };
+
   return (
-    <div className="portable-text">
+    <div className="prose prose-neutral dark:prose-invert max-w-none 
+      prose-pre:bg-muted/50 prose-pre:border prose-pre:border-border prose-pre:rounded-none
+      prose-a:text-primary prose-a:underline-offset-4 hover:prose-a:text-primary/80"
+    >
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
+        rehypePlugins={[[rehypePrettyCode as any, prettyCodeOptions]]}
         components={{
-          a: ({ node, ...props }) => (
-            <a {...props} className="text-primary underline underline-offset-4" />
-          ),
           h2: ({ node, children, ...props }) => {
             const id = String(children).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-            return <h2 id={id} {...props} className="text-2xl font-bold mt-10 mb-4">{children}</h2>;
+            return <h2 id={id} {...props}>{children}</h2>;
           },
           h3: ({ node, children, ...props }) => {
             const id = String(children).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-            return <h3 id={id} {...props} className="text-xl font-bold mt-8 mb-4">{children}</h3>;
+            return <h3 id={id} {...props}>{children}</h3>;
           },
           code: ({ node, inline, className, children, ...props }: any) => {
+            // Rehype-pretty-code handles block code.
+            // If it's inline code, we style it custom:
             if (inline) {
               return (
                 <code
-                  className="bg-muted px-1.5 py-0.5 rounded-sm text-sm font-mono text-primary before:content-[''] after:content-['']"
+                  className="bg-muted/60 px-1.5 py-0.5 rounded-sm text-sm font-mono text-primary before:content-[''] after:content-['']"
                   {...props}
                 >
                   {children}
                 </code>
               );
             }
-            return (
-              <pre className="bg-muted p-4 rounded-none overflow-x-auto text-sm font-mono border border-border">
-                <code {...props} className={className}>
-                  {children}
-                </code>
-              </pre>
-            );
+            // For block code, rehype-pretty-code overrides this, but just in case:
+            return <code className={className} {...props}>{children}</code>;
           },
         }}
       >
