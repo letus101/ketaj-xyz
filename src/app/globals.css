@@ -153,36 +153,16 @@
   background: hsl(var(--muted-foreground) / 0.5);
 }
 
-/* ── TERMINAL EASTER EGG ── */
-.theme-terminal, .theme-terminal body {
-  background-color: #050505 !important;
-  color: #00ff00 !important;
-  font-family: var(--font-jetbrains), monospace !important;
+/* ── TERMINAL EASTER EGG GLITCH ── */
+@keyframes glitch-anim {
+  0% { transform: translate(0) }
+  20% { transform: translate(-3px, 3px); filter: contrast(150%) hue-rotate(90deg) drop-shadow(2px 0 red) drop-shadow(-2px 0 blue); }
+  40% { transform: translate(-3px, -3px); filter: contrast(120%) hue-rotate(0deg); }
+  60% { transform: translate(3px, 3px); filter: contrast(150%) hue-rotate(-90deg) drop-shadow(-2px 0 red) drop-shadow(2px 0 blue); }
+  80% { transform: translate(3px, -3px); filter: contrast(120%) hue-rotate(0deg); }
+  100% { transform: translate(0) }
 }
-.theme-terminal * {
-  border-color: #004400 !important;
-}
-.theme-terminal a, .theme-terminal h1, .theme-terminal h2, .theme-terminal h3, .theme-terminal button {
-  color: #00ff00 !important;
-  text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
-}
-.theme-terminal .bg-background, .theme-terminal .bg-card, .theme-terminal .bg-popover, .theme-terminal .bg-muted {
-  background-color: #001100 !important;
-}
-.theme-terminal::after {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: repeating-linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0.15),
-    rgba(0, 0, 0, 0.15) 1px,
-    transparent 1px,
-    transparent 2px
-  );
-  pointer-events: none;
-  z-index: 9999;
+.glitch-active {
+  animation: glitch-anim 0.15s linear infinite;
+  overflow: hidden !important;
 }
