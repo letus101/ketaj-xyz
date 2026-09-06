@@ -7,6 +7,7 @@ import { urlForImage } from '@/sanity/lib/image';
 import { PortableTextRenderer, extractHeadings } from '@/components/portable-text';
 import { TableOfContents } from '@/components/table-of-contents';
 import { Badge } from '@/components/ui/badge';
+import { MarkdownRenderer } from '@/components/markdown-renderer';
 
 export const revalidate = false;
 
@@ -57,7 +58,22 @@ export default async function PostPage({ params }: PostPageProps) {
 
   if (!post) notFound();
 
-  const headings = extractHeadings(post.body || []);
+  // Extract headings from either Portable Text or Markdown
+  let headings = [];
+  if (post.markdownBody) {
+    const lines = post.markdownBody.split('\n');
+    headings = lines
+      .filter((line: string) => line.startsWith('## ') || line.startsWith('### '))
+      .map((line: string) => {
+        const level = line.startsWith('###') ? 3 : 2;
+        const text = line.replace(/^#+\s/, '');
+        const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+        return { id, text, level };
+      });
+  } else {
+    headings = extractHeadings(post.body || []);
+  }
+
   const heroUrl = post.mainImage?.asset
     ? urlForImage(post.mainImage).width(1200).url()
     : null;
@@ -114,15 +130,15 @@ export default async function PostPage({ params }: PostPageProps) {
         </div>
       )}
 
-      {/* Mobile TOC (above content) */}
-      {headings.length > 0 && (
-        <TableOfContents headings={headings} />
-      )}
 
       {/* Content with desktop TOC sidebar */}
       <div className="flex gap-12">
         <div className="min-w-0 max-w-3xl flex-1">
-          <PortableTextRenderer content={post.body || []} />
+          {post.markdownBody ? (
+            <MarkdownRenderer content={post.markdownBody} />
+          ) : (
+            <PortableTextRenderer content={post.body || []} />
+          )}
         </div>
 
         {headings.length > 0 && (

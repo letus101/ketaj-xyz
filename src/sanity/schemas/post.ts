@@ -105,6 +105,12 @@ export default defineType({
         { type: 'imageLightbox' },
       ],
     }),
+    defineField({
+      name: 'markdownBody',
+      title: 'Markdown Body (Optional)',
+      description: 'If you prefer writing in Markdown, use this field instead of the rich text Body above.',
+      type: 'markdown',
+    }),
   ],
   orderings: [
     {

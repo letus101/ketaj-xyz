@@ -49,6 +49,7 @@ export const postBySlugQuery = groq`
       alt
     },
     author->{ name, slug, image },
+    markdownBody,
     body[] {
       ...,
       _type == "image" => {
