@@ -39,6 +39,23 @@ export const postsByCategoryQuery = groq`
   }
 `;
 
+// Related posts: find posts sharing at least one category, excluding current post
+export const relatedPostsQuery = groq`
+  *[_type == "post" && _id != $currentId && count((categories[]->slug.current)[@ in $categorySlugs]) > 0] | order(publishedAt desc)[0...3] {
+    _id,
+    title,
+    slug,
+    excerpt,
+    publishedAt,
+    categories[]->{ _id, title, slug },
+    mainImage {
+      asset->{ _id, url, metadata { dimensions } },
+      alt
+    },
+    author->{ name, slug, image }
+  }
+`;
+
 // Single post by slug — full body
 export const postBySlugQuery = groq`
   *[_type == "post" && slug.current == $slug][0] {

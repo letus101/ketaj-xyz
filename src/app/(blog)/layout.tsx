@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono } from 'next/font/google';
 import { Providers } from '@/components/providers';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
+import { TerminalEasterEgg } from '@/components/terminal-easter-egg';
 import '../globals.css';
 
 const inter = Inter({
@@ -56,6 +57,7 @@ export default function BlogLayout({ children }: { children: React.ReactNode }) 
             <main className="flex-1">{children}</main>
             <Footer />
           </div>
+          <TerminalEasterEgg />
         </Providers>
       </body>
     </html>

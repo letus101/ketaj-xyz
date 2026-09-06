@@ -152,3 +152,37 @@
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--muted-foreground) / 0.5);
 }
+
+/* ── TERMINAL EASTER EGG ── */
+.theme-terminal, .theme-terminal body {
+  background-color: #050505 !important;
+  color: #00ff00 !important;
+  font-family: var(--font-jetbrains), monospace !important;
+}
+.theme-terminal * {
+  border-color: #004400 !important;
+}
+.theme-terminal a, .theme-terminal h1, .theme-terminal h2, .theme-terminal h3, .theme-terminal button {
+  color: #00ff00 !important;
+  text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+}
+.theme-terminal .bg-background, .theme-terminal .bg-card, .theme-terminal .bg-popover, .theme-terminal .bg-muted {
+  background-color: #001100 !important;
+}
+.theme-terminal::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}

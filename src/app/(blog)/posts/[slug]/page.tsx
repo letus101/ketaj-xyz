@@ -2,13 +2,14 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { sanityFetch } from '@/sanity/client';
-import { postBySlugQuery, postSlugsQuery } from '@/sanity/queries';
+import { postBySlugQuery, postSlugsQuery, relatedPostsQuery } from '@/sanity/queries';
 import { urlForImage } from '@/sanity/lib/image';
 import { PortableTextRenderer, extractHeadings } from '@/components/portable-text';
 import { TableOfContents } from '@/components/table-of-contents';
 import { Badge } from '@/components/ui/badge';
 import { MarkdownRenderer } from '@/components/markdown-renderer';
 import { estimateReadingTime } from '@/lib/reading-time';
+import { PostCard } from '@/components/post-card';
 
 export const revalidate = false;
 
@@ -67,6 +68,16 @@ export default async function PostPage({ params }: PostPageProps) {
   });
 
   if (!post) notFound();
+
+  // Fetch related posts (share categories)
+  const categorySlugs = post.categories?.map((c: any) => c.slug.current) || [];
+  const relatedPosts = categorySlugs.length > 0 
+    ? await sanityFetch<any[]>({
+        query: relatedPostsQuery,
+        params: { currentId: post._id, categorySlugs },
+        tags: ['post'],
+      })
+    : [];
 
   // Extract headings from either Portable Text or Markdown
   let headings = [];
@@ -159,6 +170,18 @@ export default async function PostPage({ params }: PostPageProps) {
           </aside>
         )}
       </div>
+
+      {/* Related Posts */}
+      {relatedPosts.length > 0 && (
+        <div className="mt-20 pt-10 border-t border-border">
+          <h2 className="text-2xl font-bold tracking-tight mb-8">Related Write-ups</h2>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {relatedPosts.map((relatedPost) => (
+              <PostCard key={relatedPost._id} post={relatedPost} />
+            ))}
+          </div>
+        </div>
+      )}
     </article>
   );
 }

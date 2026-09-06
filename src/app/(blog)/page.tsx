@@ -12,15 +12,6 @@ export default async function HomePage() {
 
   return (
     <div className="container py-12">
-      <div className="mb-10">
-        <h1 className="text-3xl font-bold tracking-tight mb-2">
-          Research &amp; Writeups
-        </h1>
-        <p className="text-muted-foreground font-mono text-sm">
-          Red team operations, DFIR, custom tooling, and CTF writeups.
-        </p>
-      </div>
-
       <PostList initialPosts={posts || []} categories={categories || []} />
     </div>
   );

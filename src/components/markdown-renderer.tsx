@@ -1,6 +1,7 @@
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import remarkGfm from 'remark-gfm';
 import rehypePrettyCode from 'rehype-pretty-code';
+import { Spoiler } from './mdx/spoiler';
 
 interface MarkdownRendererProps {
   content: string;
@@ -17,6 +18,7 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
   };
 
   const components = {
+    Spoiler,
     h2: (props: any) => {
       const id = String(props.children).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
       return <h2 id={id} {...props} />;
