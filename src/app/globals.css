@@ -154,6 +154,11 @@
 }
 
 /* ── TERMINAL EASTER EGG GLITCH ── */
+@keyframes crt-cursor-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
 @keyframes glitch-anim {
   0% { transform: translate(0) }
   20% { transform: translate(-3px, 3px); filter: contrast(150%) hue-rotate(90deg) drop-shadow(2px 0 red) drop-shadow(-2px 0 blue); }
@@ -162,7 +167,49 @@
   80% { transform: translate(3px, -3px); filter: contrast(120%) hue-rotate(0deg); }
   100% { transform: translate(0) }
 }
+@keyframes glitch-bars {
+  0%   { background-position: 0 0; }
+  20%  { background-position: 0 -40px; }
+  40%  { background-position: 0 20px; }
+  60%  { background-position: 0 -80px; }
+  80%  { background-position: 0 60px; }
+  100% { background-position: 0 0; }
+}
+@keyframes glitch-shift {
+  0%   { transform: translateX(0); }
+  15%  { transform: translateX(-8px); }
+  30%  { transform: translateX(6px); }
+  50%  { transform: translateX(-4px) scaleY(1.01); }
+  70%  { transform: translateX(10px); }
+  85%  { transform: translateX(-6px); }
+  100% { transform: translateX(0); }
+}
 .glitch-active {
   animation: glitch-anim 0.15s linear infinite;
   overflow: hidden !important;
+}
+
+/* ── CRT TERMINAL ANIMATIONS ── */
+
+/* Phosphor sweep: a bright band scrolls top → bottom continuously */
+@keyframes crt-sweep {
+  0%   { top: -130px; }
+  100% { top: 110vh; }
+}
+
+/* Subtle phosphor flicker: brightness pulses slightly at irregular steps */
+@keyframes crt-flicker {
+  0%   { opacity: 1;    }
+  5%   { opacity: 0.92; }
+  10%  { opacity: 1;    }
+  15%  { opacity: 0.97; }
+  25%  { opacity: 1;    }
+  30%  { opacity: 0.88; }
+  35%  { opacity: 1;    }
+  50%  { opacity: 1;    }
+  55%  { opacity: 0.94; }
+  60%  { opacity: 1;    }
+  80%  { opacity: 1;    }
+  85%  { opacity: 0.96; }
+  100% { opacity: 1;    }
 }

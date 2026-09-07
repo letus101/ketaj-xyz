@@ -86,6 +86,20 @@ export default function BlogLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }}
         />
+        {/* 
+          ██╗  ██╗███████╗████████╗ █████╗      ██╗  ██╗██╗   ██╗███████╗
+          ██║ ██╔╝██╔════╝╚══██╔══╝██╔══██╗     ╚██╗██╔╝╚██╗ ██╔╝╚══███╔╝
+          █████╔╝ █████╗     ██║   ███████║      ╚███╔╝  ╚████╔╝   ███╔╝ 
+          ██╔═██╗ ██╔══╝     ██║   ██╔══██║      ██╔██╗   ╚██╔╝   ███╔╝  
+          ██║  ██╗███████╗   ██║   ██║  ██║     ██╔╝ ██╗   ██║   ███████╗
+          ╚═╝  ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝     ╚═╝  ╚═╝   ╚═╝   ╚══════╝
+
+          You found me. Good.
+          You know what to do — you've seen the hint already.
+          Type it. Anywhere on the page. Don't overthink it.
+
+          knock knock.
+        */}
         <Providers
           attribute="class"
           defaultTheme="dark"
