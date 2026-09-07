@@ -99,8 +99,51 @@ export default async function PostPage({ params }: PostPageProps) {
     ? urlForImage(post.mainImage).width(1200).url()
     : null;
 
+  // JSON-LD structured data for Google
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.excerpt || '',
+    datePublished: post.publishedAt,
+    dateModified: post._updatedAt || post.publishedAt,
+    url: `https://ketaj.xyz/posts/${post.slug.current}`,
+    image: heroUrl
+      ? [heroUrl]
+      : [`https://ketaj.xyz/api/og?title=${encodeURIComponent(post.title)}`],
+    author: post.author
+      ? {
+          '@type': 'Person',
+          name: post.author.name,
+          url: 'https://ketaj.xyz/about',
+        }
+      : {
+          '@type': 'Person',
+          name: 'Ketaj',
+          url: 'https://ketaj.xyz/about',
+        },
+    publisher: {
+      '@type': 'Organization',
+      name: 'ketaj.xyz',
+      url: 'https://ketaj.xyz',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://ketaj.xyz/icon.svg',
+      },
+    },
+    keywords: post.categories?.map((c: any) => c.title).join(', ') || '',
+    articleSection: post.categories?.[0]?.title || 'Cybersecurity',
+    inLanguage: 'en-US',
+  };
+
   return (
     <article className="container py-12">
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       {/* Post header */}
       <header className="mb-10 max-w-3xl">
         {post.categories && post.categories.length > 0 && (

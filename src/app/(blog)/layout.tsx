@@ -42,9 +42,50 @@ export const metadata: Metadata = {
 };
 
 export default function BlogLayout({ children }: { children: React.ReactNode }) {
+  const siteJsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        '@id': 'https://ketaj.xyz/#website',
+        url: 'https://ketaj.xyz',
+        name: 'ketaj.xyz',
+        description: 'Cybersecurity research — red team operations, DFIR, custom tooling, and CTF writeups.',
+        inLanguage: 'en-US',
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: {
+            '@type': 'EntryPoint',
+            urlTemplate: 'https://ketaj.xyz/?q={search_term_string}',
+          },
+          'query-input': 'required name=search_term_string',
+        },
+      },
+      {
+        '@type': 'Person',
+        '@id': 'https://ketaj.xyz/#author',
+        name: 'Ketaj',
+        url: 'https://ketaj.xyz/about',
+        sameAs: ['https://ketaj.xyz'],
+        jobTitle: 'Cybersecurity Researcher',
+        knowsAbout: [
+          'Red Team Operations',
+          'Digital Forensics and Incident Response',
+          'Malware Analysis',
+          'Exploit Development',
+          'Cyber Threat Intelligence',
+        ],
+      },
+    ],
+  };
+
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${jetbrains.variable}`}>
       <body className="min-h-screen bg-background font-sans text-foreground antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }}
+        />
         <Providers
           attribute="class"
           defaultTheme="dark"
